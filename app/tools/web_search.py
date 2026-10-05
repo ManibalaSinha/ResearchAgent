@@ -2,7 +2,7 @@ import asyncio
 
 
 class WebSearchError(Exception):pass
-async def search(query:str):
+async def web_search(query:str):
    try:
       await asyncio.sleep(.05)
       if "failure" in query.lower():

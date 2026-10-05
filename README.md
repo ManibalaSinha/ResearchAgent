@@ -17,6 +17,7 @@ source .venv/bin/activate
 pip install fastapi uvicorn
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+pip install sqlalchemy asyncpg
 
 test: pip install pytest pytest-asyncio httpx
 pytest -v
