@@ -13,7 +13,6 @@ def test_research_health():
 def test_create_research_success(mock_agent_class, mock_repository_class,):
    mock_agent = mock_agent_class.return_value
    mock_agent.run= AsyncMock(return_value="Web research:AI\nDocument research:AI")
-
    mock_result= type("ReserchResult",(),{"id":1,"question":"What is AI?","answer":"Web research:AI\nDocument research:AI","status":"completed",},)()
    mock_repository = mock_repository_class.return_value
    mock_repository.create= AsyncMock(return_value= mock_result)

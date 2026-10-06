@@ -1,12 +1,23 @@
-import asyncio
+import requests
 
 
-class WebSearchError(Exception):pass
-async def web_search(query:str):
-   try:
-      await asyncio.sleep(.05)
-      if "failure" in query.lower():
-         raise WebSearchError("web search timed out")
-      return f"Web results for:{query}"
-   except TimeoutError as exc:
-      raise WebSearchError(str(exc)) from exc
+class WebSearchError(Exception):
+    pass
+
+
+async def web_search(query: str):
+    try:
+        response = requests.get(
+            "https://example.com/search",
+            params={"q": query},
+            timeout=10
+        )
+
+        response.raise_for_status()
+
+        data = response.json()
+
+        return data.get("results", [])
+
+    except Exception:
+        return []
