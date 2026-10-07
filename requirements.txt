@@ -6,6 +6,6 @@ openai
 chromadb
 python-dotenv
 pytest
-sqlalchemy
+sqlalchemy[asyncio]
 psycopg[binary]
 httpx
