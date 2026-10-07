@@ -23,9 +23,7 @@ async def create_research(request:ResearchRequest, db:AsyncSession=Depends(get_d
       result = await service.research(request.question)
    except(WebSearchError, DocumentSearchError):
       raise HTTPException(status_code=503,detail="Research service temporarily unavailable")
-   return ResearchResponse(id=result.id, question=result.question, answer=result.answer, status=result.status)
-
-
+   return ResearchResponse(id=result.id,question=result.question, answer=result.answer, status=result.status)
 
 """ @router.get("/test-db")
 async def test_db(db:AsyncSession = Depends(get_db)):
@@ -51,6 +49,6 @@ async def get_research(research_id:int, db:AsyncSession = Depends(get_db)):
    result = await service.get_by_id(research_id)
    if result is None:
       raise HTTPException(status_code=404,detail="Research not found",)
-   return ResearchResponse(id=result.id, question=result.question, answer=result.answer, status=result.status)
+   return ResearchResponse(id=result.id,question=result.question, answer=result.answer, status=result.status)
 #@router.get()
 

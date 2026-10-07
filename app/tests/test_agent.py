@@ -1,15 +1,10 @@
 import pytest
 from app.services.agent import ResearchAgent
 
-
 @pytest.mark.asyncio
 async def test_agent_research(mocker):
-    mock_search = mocker.patch(
-        "app.services.agent.web_search"
-    )
-    mock_document = mocker.patch(
-        "app.services.agent.document_search"
-    )
+    mock_search = mocker.patch(        "app.services.agent.web_search"    )
+    mock_document = mocker.patch(        "app.services.agent.document_search"    )
 
     mock_search.return_value = [
         {

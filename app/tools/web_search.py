@@ -1,9 +1,12 @@
 import requests
 
-
 class WebSearchError(Exception):
     pass
-
+def web_search(question):
+    return [
+        {"title": "Result 1"},
+        {"title": "Result 2"}
+    ]
 
 async def web_search(query: str):
     try:
