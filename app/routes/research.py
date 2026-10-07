@@ -28,7 +28,7 @@ async def create_research(request:ResearchRequest, db:AsyncSession=Depends(get_d
 """ @router.get("/test-db")
 async def test_db(db:AsyncSession = Depends(get_db)):
    result = await db.execute(text("SELECT 1"))
-   return {"database":"connected", "result": result.scalar(),} """
+   return {"database":"connected", "r8.iesult": result.scalar(),} """
 @router.get("/test-repository/{research_id}")
 async def test_repository(research_id: int, db: AsyncSession = Depends(get_db),):
     repository = ResearchRepository(db)
