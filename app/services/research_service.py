@@ -1,4 +1,3 @@
-from app.services.agent import ResearchAgent
 class ResearchService:
    def __init__(self, agent, repository):
       self.agent = agent

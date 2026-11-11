@@ -24,14 +24,14 @@ def test_create_research_success(mock_agent_class, mock_repository_class,):
 def test_create_research_invalid_question():
    response = client.post("/research",json={"question":"AI"},)
    assert response.status_code==422
-@patch("app.routes.research.ResearchAgent")
+@patch("app.api.research.ResearchAgent")
 def test_web_search_failure(mock_agent_class):
    mock_agent=mock_agent_class.return_value
    mock_agent.run=AsyncMock(side_effect=WebSearchError("Web search timed out"))
    response = client.post("/research", json={"question":"What is AI?"},)
    assert response.status_code==503
    assert response.json() == {"detail":"Research service temporarily unavailable"}
-@patch("app.routes.research.ResearchAgent")
+@patch("app.api.research.ResearchAgent")
 def test_document_search_failure(mock_agent_class):
    mock_agent= mock_agent_class.return_value
    mock_agent.run=AsyncMock(side_effect=DocumentSearchError("Document search service failed"))

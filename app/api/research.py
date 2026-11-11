@@ -6,12 +6,12 @@ from app.services.research_service import ResearchService
 from app.services.agent import ResearchAgent
 from app.repositories.research_repository import ResearchRepository
 from app.tools.document_search import DocumentSearchError
-from app.tools.web_search import WebSearchError
+from app.tools.web_search import WebSearchError 
 from sqlalchemy import text
 
 router = APIRouter()
 @router.get("/health")
-async def reserch_health():
+async def research_health():
    return {"status": "ok"}
 
 @router.post("",response_model=ResearchResponse)
@@ -43,12 +43,11 @@ async def test_repository(research_id: int, db: AsyncSession = Depends(get_db),)
         "status": result.status,    }
 @router.get("/{research_id}", response_model=ResearchResponse)
 async def get_research(research_id:int, db:AsyncSession = Depends(get_db)):
-   repository = ResearchRepository(db)
-   agent= ResearchAgent()
-   service= ResearchService(agent=agent,repository=repository,)
+   repository = ResearchRepository(db) 
+   service= ResearchService(agent=ResearchAgent,repository=repository)
    result = await service.get_by_id(research_id)
    if result is None:
       raise HTTPException(status_code=404,detail="Research not found",)
    return ResearchResponse(id=result.id,question=result.question, answer=result.answer, status=result.status)
-#@router.get()
+
 

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import research
+from app.api import research
 import logging
 from fastapi import Request
 from fastapi.responses import JSONResponse
@@ -17,7 +17,7 @@ async def log_unhandled_exception(request: Request, exc: Exception):
     )
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal server error. Check the terminal."},
+        content={"detail": "Internal server error."},
     )
 @app.get("/health")
 def health():
