@@ -1,4 +1,5 @@
 from fastapi import APIRouter,Depends, HTTPException
+from openai import RateLimitError
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database.connection.session import get_db
 from app.schemas.research import ResearchResponse, ResearchRequest
@@ -21,6 +22,10 @@ async def create_research(request:ResearchRequest, db:AsyncSession=Depends(get_d
    service=ResearchService(agent=agent,repository=repository,)
    try:
       result = await service.research(request.question)
+   except RateLimitError:
+    raise HTTPException(
+        status_code=429,
+        detail="OpenAI API quota exhausted. Please check API billing.")
    except(WebSearchError, DocumentSearchError):
       raise HTTPException(status_code=503,detail="Research service temporarily unavailable")
    return ResearchResponse(id=result.id,question=result.question, answer=result.answer, status=result.status)
