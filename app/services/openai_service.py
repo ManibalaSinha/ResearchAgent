@@ -6,17 +6,17 @@ from openai import AsyncOpenAI
 # Load environment variables first
 load_dotenv(override=True)
 
-API_KEY = os.getenv("OPENAI_API_KEY")
+HF_TOKEN = os.getenv("HF_A_TOKEN")
 
-client = AsyncOpenAI(api_key=API_KEY)
+client = AsyncOpenAI(base_url="https://router.huggingface.co/v1", api_key=HF_TOKEN)
 
-MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+MODEL = os.getenv("HF_MODEL", "openai/gpt-oss-20b:fastest")
+
+if not HF_TOKEN:
+    raise RuntimeError("HF_TOKEN is not configured")
 
 async def generate_research_plan(
     question: str, context: str = "") -> str:
-
-    if not os.getenv("OPENAI_API_KEY"):
-        raise RuntimeError("OPENAI_API_KEY is not configured")
 
     prompt = f"""
     You are an expert AI research assistant.
